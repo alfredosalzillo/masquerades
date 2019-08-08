@@ -2,11 +2,23 @@ import {
   storiesOf,
   html,
 } from '@open-wc/demoing-storybook';
+import { css, string } from '../src/css';
 
-storiesOf('Demo|Example Element', module)
+storiesOf('css template', module)
   .add(
-    'Alternative Header',
-    () => html`
-      <my-el .header=${'Something else'}></my-el>
-    `,
+    'test generator',
+    () => {
+      const className = css`
+         color: black;
+         width: 100px;
+         height: ${100}px;
+      `;
+      return html`
+        <div class=${className}>
+          <code>
+            ${string()}
+          </code>        
+        </div>
+      `;
+    },
   );
