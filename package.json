@@ -8,13 +8,17 @@
     "build": "babel src/main.js --out-dir dist",
     "generate-declaration": "jsdoc -t node_modules/tsd-jsdoc/dist -r ./dist/plugin.js -d ./dist/",
     "prepare": "npm run lint && npm run build",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "storybook": "start-storybook -p 9001",
+    "storybook:build": "build-storybook -o _site -s storybook-static",
+    "site:build": "npm run storybook:build"
   },
   "author": "Alfredo Salzillo",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
+    "@open-wc/demoing-storybook": "^0.3.0",
     "@types/jest": "^24.0.12",
     "babel-jest": "^24.5.0",
     "babel-preset-airbnb": "^3.0.1",
@@ -25,5 +29,8 @@
     "jest": "^24.5.0"
   },
   "dependencies": {
+    "@storybook/polymer": "latest",
+    "haunted": "^4.5.1",
+    "lit-html": "^1.1.1"
   }
 }
