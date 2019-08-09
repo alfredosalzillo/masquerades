@@ -3,17 +3,16 @@ import {
   html,
 } from '@open-wc/demoing-storybook';
 import { action } from '@storybook/addon-actions';
+import { component, useState } from 'haunted/lib/haunted';
 import { css, string } from '../src/css';
 import styled from '../src/main';
-import { component, useState } from 'haunted/lib/haunted';
 
 const StyledButton = styled.button`
   color: white;
   width: 100px;
   height: 50px;
   background: ${({ disabled }) => (disabled ? 'grey' : 'black')};
-`;
-StyledButton.observedAttributes.push('disabled');
+`.observeAttributes(['disabled']);
 customElements.define('styled-button', StyledButton, {
   extends: 'button',
 });
@@ -25,17 +24,18 @@ const TestButton = component(() => {
       is="styled-button"
       ?disabled=${disabled || null}
       @click=${() => setDisabled(true)}
-    >Test Button</button>
+    >Click to Disable</button>
   `;
 });
 
 customElements.define('test-button', TestButton);
 
 const StyledDiv = styled.div`
-  color: white;
-  width: 100px;
-  height: 100px;
-  background: black; 
+  color: black;
+  width: 100vh;
+  height: 100vw;
+  margin: 100px;
+  background: gray; 
 `;
 customElements.define('styled-div', StyledDiv, {
   extends: 'div',
@@ -62,9 +62,9 @@ storiesOf('css template', module)
   .add(
     'button',
     () => html`
-        <button is="styled-button" @click=${action('click')}>Test Button</button>
-        <button is="styled-button" @click=${action('click-disabled')} disabled>Test Button</button>
-        <test-button>Test Button</test-button>
+        <!-- <button is="styled-button" @click=${action('click')}>Test Button</button>
+        <button is="styled-button" @click=${action('click-disabled')} disabled>Test Button</button></-->
+        <test-button>Click to disable</test-button>
       `,
   )
   .add(

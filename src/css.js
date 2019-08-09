@@ -1,5 +1,15 @@
 import hash from './hash';
 
+export const applySheetToShadowRoot = (el, ...sheets) => {
+  if (!el || el === window) {
+    return undefined;
+  }
+  if (el instanceof ShadowRoot) {
+    // eslint-disable-next-line no-param-reassign
+    el.adoptedStyleSheets = sheets;
+  }
+  return applySheetToShadowRoot(el.parentNode, ...sheets);
+};
 const factory = (namespace = 'css-') => {
   const style = {};
   const uniqueName = (rule) => {
@@ -9,10 +19,8 @@ const factory = (namespace = 'css-') => {
     return uuid;
   };
   // create and inject style tag
-  const styleTag = document.createElement('style');
-  styleTag.setAttribute('data-css', '');
-  document.head.appendChild(styleTag);
-  const { sheet } = styleTag;
+  const sheet = new CSSStyleSheet();
+  document.adoptedStyleSheets = [sheet];
   // immutably concat strings and values together
   const concat = (strings, values) => strings.map((s, i) => `${s}${values[i] || ''}`)
     .join('');
@@ -37,6 +45,7 @@ const factory = (namespace = 'css-') => {
       // inject rule at head of sheet
       if ([...sheet.rules.values()].every(r => r.selectorText !== `.${uuid}`)) {
         sheet.insertRule(`.${uuid}{ ${rule} }`, 0);
+        sheet.insertRule(`:host-context(*).${uuid}{ ${rule} }`, 0);
       }
     });
   const injectAll = () => inject(...Object
@@ -52,10 +61,11 @@ const factory = (namespace = 'css-') => {
     css,
     inject,
     injectAll,
+    sheet,
     string,
   };
 };
 
 export const {
-  css, inject, string, injectAll,
+  css, inject, string, injectAll, sheet,
 } = factory();
