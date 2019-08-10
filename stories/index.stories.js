@@ -37,15 +37,15 @@ const TestButton = component(() => {
 customElements.define('test-button', TestButton);
 
 const StyledDiv = styled.div`
-    color: black;
-    width: 90vh;
-    padding: 10px;
-    border: 1px solid black;
-    border-radius: 5px;
-    text-align: justify;
-    vertical-align: central;
-    font-family: "Roboto Black", serif;
-    background: #ffffAA;
+  background: #f1c40f;
+  color: #fff;
+  border: 3px solid #fff;
+  border-radius: 50px;
+  padding: 0.8rem 2rem;
+  font: 24px "Margarine", sans-serif;
+  outline: none;
+  cursor: pointer;
+  position: relative;
 `;
 customElements.define('styled-div', StyledDiv, {
   extends: 'div',
@@ -65,7 +65,9 @@ storiesOf('Styled element', module)
     'div',
     () => html`
         <div is="styled-div">
-            <p>${loremInpsumForDIv}</p>
+          ${loremInpsumForDIv.split('.').map(paragraph => html`
+            <p>${paragraph}.</p>
+          `)}
         </div>
       `,
   );
