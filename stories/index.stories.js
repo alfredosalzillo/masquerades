@@ -4,10 +4,17 @@ import { loremIpsum } from 'lorem-ipsum';
 import styled from '../src/main';
 
 const StyledButton = styled.button`
-  color: white;
-  width: 100px;
-  height: 50px;
-  background: ${({ disabled }) => (disabled ? 'grey' : 'black')};
+  background: ${({ disabled }) => (disabled ? 'grey' : '#f1c40f')};
+  color: #fff;
+  border: 3px solid #fff;
+  border-radius: 50px;
+  padding: 0.8rem 2rem;
+  font: 24px "Margarine", sans-serif;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: 0.2s ease-in-out;
+  letter-spacing: 2px;
   ${({ disabled }) => disabled && styled.css`
     border-radius: 15px;
   `}
