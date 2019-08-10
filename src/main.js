@@ -1,5 +1,5 @@
 import {
-  applySheetToShadowRoot, concat, css, inject, sheet,
+  adoptSheets, concat, css, inject, sheet,
 } from './css';
 
 const callOrValue = (...args) => fnOrValue => (
@@ -30,7 +30,7 @@ function StyledElement(BaseElement, styler) {
     }
 
     connectedCallback() {
-      applySheetToShadowRoot(this, sheet);
+      adoptSheets(this, sheet);
       this.updateStyle();
     }
 
