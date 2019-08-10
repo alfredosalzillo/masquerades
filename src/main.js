@@ -56,14 +56,14 @@ function StyledElement(BaseElement, styler) {
 
 export const forComponent = BaseElement => (
   strings, ...values
-) => StyledElement(BaseElement, el => css(strings, values.map(callOrValue(el))));
+) => StyledElement(BaseElement, el => css(strings, ...values.map(callOrValue(el))));
 
 // extending native classes is needed for babel correct transpile
 const button = forComponent(class extends HTMLButtonElement {});
 const div = forComponent(class extends HTMLDivElement {});
 const span = forComponent(class extends HTMLSpanElement {});
 
-const otherCss = (strings, ...values) => concat(strings, ...values.map(callOrValue()));
+const otherCss = (strings, ...values) => concat(strings, values.map(callOrValue()));
 
 export default {
   button,
