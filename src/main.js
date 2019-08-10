@@ -10,7 +10,7 @@ const callOrValue = (...args) => fnOrValue => (
 
 const observedAttributeSymbol = Symbol('observed-attributes');
 function StyledElement(BaseElement, styler) {
-  class Element extends BaseElement {
+  return class Element extends BaseElement {
     constructor() {
       super();
       this.disposer = () => null;
@@ -50,24 +50,21 @@ function StyledElement(BaseElement, styler) {
         this.disposer();
       }
     }
-  }
-  return Element;
+  };
 }
 
-export const forComponent = BaseElement => (
+const styled = BaseElement => (
   strings, ...values
 ) => StyledElement(BaseElement, el => css(strings, ...values.map(callOrValue(el))));
 
-// extending native classes is needed for babel correct transpile
-const button = forComponent(class extends HTMLButtonElement {});
-const div = forComponent(class extends HTMLDivElement {});
-const span = forComponent(class extends HTMLSpanElement {});
+styled.css = (strings, ...values) => concat(strings, values.map(callOrValue()));
 
-const otherCss = (strings, ...values) => concat(strings, values.map(callOrValue()));
+// extending native classes is needed for babel correct transpile or don't work with js5
+styled.a = styled(class extends HTMLLinkElement {});
+styled.button = styled(class extends HTMLButtonElement {});
+styled.div = styled(class extends HTMLDivElement {});
+styled.input = styled(class extends HTMLInputElement {});
+styled.p = styled(class extends HTMLParagraphElement {});
+styled.span = styled(class extends HTMLSpanElement {});
 
-export default {
-  button,
-  div,
-  span,
-  css: otherCss,
-};
+export default styled;
