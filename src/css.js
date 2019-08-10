@@ -10,7 +10,7 @@ export const applySheetToShadowRoot = (el, ...sheets) => {
   }
   return applySheetToShadowRoot(el.parentNode, ...sheets);
 };
-const factory = (namespace = 'css-') => {
+const factory = (namespace = 'css') => {
   const style = {};
   const uniqueName = (rule) => {
     if (rule in style) return style[rule];
@@ -29,12 +29,10 @@ const factory = (namespace = 'css-') => {
   const css = (strings, ...values) => {
     // reduce CSS string to an array of "prop:value" rule strings
     const rules = concat(strings, values)
-      .replace(/\s/g, '') // remove whitespace (including new lines)
-      .slice(0, -1) // remove trailing semicolon
-      .split(';'); // split on semicolons yielding rule strings
-    return rules
-      .map(uniqueName)
-      .join(' ');
+      .replace(/\s/g, ''); // remove whitespace (including new lines)
+      // .slice(0, -1); // remove trailing semicolon
+      // .split(';'); // split on semicolons yielding rule strings
+    return uniqueName(rules);
   };
 
   // inject rules into a style tag, and into the DOM
@@ -45,7 +43,6 @@ const factory = (namespace = 'css-') => {
       // inject rule at head of sheet
       if ([...sheet.rules.values()].every(r => r.selectorText !== `.${uuid}`)) {
         sheet.insertRule(`.${uuid}{ ${rule} }`, 0);
-        sheet.insertRule(`:host-context(*).${uuid}{ ${rule} }`, 0);
       }
     });
   const injectAll = () => inject(...Object
@@ -58,6 +55,7 @@ const factory = (namespace = 'css-') => {
     .join(' ');
 
   return {
+    concat,
     css,
     inject,
     injectAll,
@@ -67,5 +65,10 @@ const factory = (namespace = 'css-') => {
 };
 
 export const {
-  css, inject, string, injectAll, sheet,
+  concat,
+  css,
+  inject,
+  string,
+  injectAll,
+  sheet,
 } = factory();

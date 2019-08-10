@@ -1,5 +1,5 @@
 import {
-  applySheetToShadowRoot, css, inject, sheet,
+  applySheetToShadowRoot, concat, css, inject, sheet,
 } from './css';
 
 const callOrValue = (...args) => fnOrValue => (
@@ -61,8 +61,13 @@ export const forComponent = BaseElement => (
 // extending native classes is needed for babel correct transpile
 const button = forComponent(class extends HTMLButtonElement {});
 const div = forComponent(class extends HTMLDivElement {});
+const span = forComponent(class extends HTMLSpanElement {});
+
+const otherCss = (strings, ...values) => concat(strings, ...values.map(callOrValue()));
 
 export default {
   button,
   div,
+  span,
+  css: otherCss,
 };
