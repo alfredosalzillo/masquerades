@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "A library for styled web components",
   "main": "index.js",
+  "esnext": "src/main.js",
   "scripts": {
     "lint": "eslint src/main.js",
-    "build": "babel src/main.js --out-dir dist",
+    "build": "rollup -c rollup.plugin.js",
     "generate-declaration": "jsdoc -t node_modules/tsd-jsdoc/dist -r ./dist/plugin.js -d ./dist/",
     "prepare": "npm run lint && npm run build",
     "test": "jest --coverage",
@@ -33,7 +34,10 @@
     "eslint-plugin-class-property": "^1.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^22.4.1",
-    "jest": "^24.5.0"
+    "jest": "^24.5.0",
+    "rollup": "^1.19.4",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-node-resolve": "^5.2.0"
   },
   "dependencies": {
     "@storybook/polymer": "latest",
