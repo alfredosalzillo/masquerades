@@ -8,7 +8,7 @@
     "lint": "eslint src/main.js",
     "build": "rollup -c rollup.plugin.js",
     "generate-declaration": "jsdoc -t node_modules/tsd-jsdoc/dist -r ./dist/plugin.js -d ./dist/",
-    "prepare": "npm run lint && npm run build",
+    "prepare": "npm run build",
     "test": "jest --coverage",
     "storybook": "start-storybook -p 9001",
     "storybook:build": "build-storybook -o _site -s storybook-static",
@@ -37,6 +37,7 @@
     "jest": "^24.5.0",
     "rollup": "^1.19.4",
     "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "dependencies": {
