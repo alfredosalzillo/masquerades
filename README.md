@@ -6,6 +6,22 @@ This library is a work in progress, feel free to participate to the project.
 Styled components are easy to write and manage.
 They focus only on style and anything else.
 
+## Usage
+Install via npm or yarn.
+```bash
+npm i masquerade
+yarn add masquerade
+```
+import using es modules.
+```javascript
+import styled from 'masquerade';
+
+// define styled components
+const StyledDiv = styled.div`
+  /*some css...*/
+`
+customElements.define('styled-div', StyledDiv, { extends: "div" });
+```
 ## Examples
 ### Style Custom Elements
 Style a custom component using `styled(CustomComponent)`.
