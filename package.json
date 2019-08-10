@@ -15,6 +15,10 @@
   },
   "author": "Alfredo Salzillo",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alfredosalzillo/masquerade"
+  },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
