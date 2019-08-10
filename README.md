@@ -1,4 +1,4 @@
-# Masquerade
+# Masquerade 🎭
 A library for __styled web components__.
 
 This library is a work in progress, feel free to participate to the project.
