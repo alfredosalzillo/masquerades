@@ -5,14 +5,14 @@ export type StyledElement<T extends HTMLElement | ShadowRoot> = {
 
 export type StyledTaggedTemplate<T extends HTMLElement | ShadowRoot> = (
   strings: TemplateStringsArray,
-  ...values: Array<string | number | Function>
+  ...values: Array<string | number | ((t: T) => string) >
 ) => StyledElement<T> ;
 
 export interface Styled {
   <T extends HTMLElement | ShadowRoot>(element: T): StyledTaggedTemplate<T>;
   css: (
     strings: TemplateStringsArray,
-    ...values: Array<string | number | Function>
+    ...values: Array<string | number | (() => string)>
   ) => string;
   a: StyledTaggedTemplate<HTMLLinkElement>;
   button: StyledTaggedTemplate<HTMLButtonElement>;
