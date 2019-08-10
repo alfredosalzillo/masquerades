@@ -1,15 +1,25 @@
 import hash from './hash';
 
-export const applySheetToShadowRoot = (el, ...sheets) => {
+// immutably concat strings and values together
+export const concat = (strings, values) => strings
+  .map((s, i) => `${s}${values[i] || ''}`)
+  .join('');
+
+export const adoptSheets = (el, ...sheets) => {
   if (!el || el === window) {
-    return undefined;
+    return;
   }
-  if (el instanceof ShadowRoot) {
+  if (el instanceof ShadowRoot || el instanceof HTMLDocument) {
     // eslint-disable-next-line no-param-reassign
-    el.adoptedStyleSheets = sheets;
+    el.adoptedStyleSheets = [
+      ...el.adoptedStyleSheets,
+      ...sheets.filter(sheet => !el.adoptedStyleSheets.includes(sheet)),
+    ];
+    return;
   }
-  return applySheetToShadowRoot(el.parentNode, ...sheets);
+  adoptSheets(el.parentNode, ...sheets);
 };
+
 const factory = (namespace = 'css') => {
   const style = {};
   const uniqueName = (rule) => {
@@ -18,32 +28,21 @@ const factory = (namespace = 'css') => {
     style[rule] = uuid;
     return uuid;
   };
-  // create and inject style tag
+  // create and inject the css style sheet
   const sheet = new CSSStyleSheet();
-  document.adoptedStyleSheets = [sheet];
-  // immutably concat strings and values together
-  const concat = (strings, values) => strings.map((s, i) => `${s}${values[i] || ''}`)
-    .join('');
+  adoptSheets(document, sheet);
 
   // parse template string into class name(s)
-  const css = (strings, ...values) => {
-    // reduce CSS string to an array of "prop:value" rule strings
-    const rules = concat(strings, values);
-    // .replace(/\s/g, ''); // remove whitespace (including new lines)
-    // .slice(0, -1); // remove trailing semicolon
-    // .split(';'); // split on semicolons yielding rule strings
-    return uniqueName(rules);
-  };
+  const css = (strings, ...values) => uniqueName(concat(strings, values));
 
   // inject rules into a style tag, and into the DOM
   // TODO: find a better way
   const inject = (...classes) => Object.entries(style)
     .filter(([, uuid]) => classes.some(c => uuid === c))
+    .filter(([, uuid]) => [...sheet.rules].every(r => r.selectorText !== `.${uuid}`))
     .forEach(([rule, uuid]) => {
       // inject rule at head of sheet
-      if ([...sheet.rules.values()].every(r => r.selectorText !== `.${uuid}`)) {
-        sheet.insertRule(`.${uuid}{ ${rule} }`, 0);
-      }
+      sheet.insertRule(`.${uuid}{ ${rule} }`, 0);
     });
   const injectAll = () => inject(...Object
     .keys(style));
@@ -55,7 +54,6 @@ const factory = (namespace = 'css') => {
     .join(' ');
 
   return {
-    concat,
     css,
     inject,
     injectAll,
@@ -65,7 +63,6 @@ const factory = (namespace = 'css') => {
 };
 
 export const {
-  concat,
   css,
   inject,
   string,
