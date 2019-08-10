@@ -7,7 +7,33 @@ Styled components are easy to write and manage.
 They focus only on style and anything else.
 
 ## Examples
-Create a styled button
+### Style Custom Elements
+Style a custom component using `styled(CustomComponent)`.
+```javascript
+import styled from 'masquerade';
+
+const StyledCustomComponent = styled(CustomComponent)`
+  background: ${({ disabled }) => (disabled ? 'grey' : '#f1c40f')};
+  color: #fff;
+  border: 3px solid #fff;
+  border-radius: 5px;
+  padding: 0.8rem 2rem;
+  font: 24px "Margarine", sans-serif;
+  outline: none;
+  display: block;
+  letter-spacing: 2px;
+  ${({ disabled }) => disabled && styled.css`
+    border-radius: 15px;
+  `}
+`
+
+// Define the styled button as extension of the native button
+customElements.define('custom-component', StyledCustomComponent);
+
+```
+### Style Native Elements
+Shortcut for style native components are available,
+for example to style a button use `styled.button`.
 ```javascript
 import styled from 'masquerade';
 
@@ -27,7 +53,9 @@ const StyledButton = styled.button`
   ${({ disabled }) => disabled && styled.css`
     border-radius: 15px;
   `}
-`.observeAttributes(['disabled']);
+`
+// set up observedAttributes
+  .observeAttributes(['disabled']);
 
 // Define the styled button as extension of the native button
 customElements.define('styled-button', StyledButton, {
