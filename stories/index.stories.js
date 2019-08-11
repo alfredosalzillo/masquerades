@@ -40,20 +40,36 @@ const StyledDiv = styled.div`
   background: #f1c40f;
   color: #fff;
   border: 3px solid #fff;
-  border-radius: 50px;
+  border-radius: 10px;
   padding: 0.8rem 2rem;
   font: 24px "Margarine", sans-serif;
   outline: none;
-  cursor: pointer;
   position: relative;
+  p {
+    margin: 0.3rem;
+    padding: 0;
+    text-align; justify;
+    :first-letter {
+      initial-letter: 2;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-left: 1em;
+    }
+    :hover {
+      font-size: 26px;
+    }
+  }
 `;
 customElements.define('styled-div', StyledDiv, {
   extends: 'div',
 });
 
-const loremInpsumForDIv = loremIpsum({
-  count: 500,
-});
+const loremInpsumForDIv = Array(15).fill(() => loremIpsum({
+  count: 1,
+  paragraphLowerBound: 10,
+  paragraphUpperBound: 200,
+})).map(fn => fn());
 storiesOf('Styled element', module)
   .add(
     'button',
@@ -65,8 +81,8 @@ storiesOf('Styled element', module)
     'div',
     () => html`
         <div is="styled-div">
-          ${loremInpsumForDIv.split('.').map(paragraph => html`
-            <p>${paragraph}.</p>
+          ${loremInpsumForDIv.map(paragraph => html`
+            <p>${paragraph}</p>
           `)}
         </div>
       `,
