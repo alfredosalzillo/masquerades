@@ -7,18 +7,15 @@ export const concat = (strings, values) => strings
   .join('');
 
 export const adoptSheets = (el, ...sheets) => {
-  if (!el || el === window) {
-    return;
-  }
-  if (el instanceof ShadowRoot || el instanceof HTMLDocument) {
-    // eslint-disable-next-line no-param-reassign
-    el.adoptedStyleSheets = [
-      ...el.adoptedStyleSheets,
-      ...sheets.filter(sheet => !el.adoptedStyleSheets.includes(sheet)),
+  const root = el.getRootNode();
+  if (root) {
+    root.adoptedStyleSheets = [
+      ...new Set([
+        ...root.adoptedStyleSheets,
+        ...sheets,
+      ]),
     ];
-    return;
   }
-  adoptSheets(el.parentNode, ...sheets);
 };
 
 const factory = (namespace = 'css') => {

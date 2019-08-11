@@ -1,10 +1,19 @@
 import { html, storiesOf } from '@open-wc/demoing-storybook';
 import { component, useState } from 'haunted/lib/haunted';
 import { loremIpsum } from 'lorem-ipsum';
-import styled from '../src/main';
+import styled, { createTheme } from '../src/main';
+
+const ThemeProvider = createTheme({
+  buttonBackground: '#12a57a',
+});
+customElements.define('theme-provider', ThemeProvider);
 
 const StyledButton = styled.button`
-  background: ${({ disabled }) => (disabled ? 'grey' : '#f1c40f')};
+  background: ${({ disabled, theme = {} }) => (
+    disabled
+      ? 'grey'
+      : (theme.buttonBackground || '#f1c40f')
+  )};
   color: #fff;
   border: 3px solid #fff;
   border-radius: 50px;
@@ -74,6 +83,11 @@ storiesOf('Styled element', module)
   .add(
     'button',
     () => html`
+        <theme-provider value=${{
+          buttonBackground: '#12a57a',
+        }}>
+            <test-button>Click to disable</test-button>
+        </theme-provider>
         <test-button>Click to disable</test-button>
       `,
   )
