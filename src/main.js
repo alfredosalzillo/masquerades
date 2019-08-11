@@ -9,6 +9,7 @@ const callOrValue = (...args) => fnOrValue => (
 );
 
 const observedAttributeSymbol = Symbol('observed-attributes');
+
 function StyledElement(BaseElement, styler) {
   return class Element extends BaseElement {
     constructor() {
@@ -17,7 +18,10 @@ function StyledElement(BaseElement, styler) {
     }
 
     static get observedAttributes() {
-      return Element[observedAttributeSymbol];
+      return [
+        ...(Element[observedAttributeSymbol] || []),
+        ...(super.observedAttributes || []),
+      ];
     }
 
     static observeAttributes(attributes) {
@@ -26,10 +30,16 @@ function StyledElement(BaseElement, styler) {
     }
 
     attributeChangedCallback() {
+      if (super.attributeChangedCallback) {
+        super.attributeChangedCallback();
+      }
       this.updateStyle();
     }
 
     connectedCallback() {
+      if (super.connectedCallback) {
+        super.connectedCallback();
+      }
       adoptSheets(this, sheet);
       this.updateStyle();
     }
@@ -60,11 +70,17 @@ const styled = BaseElement => (
 styled.css = (strings, ...values) => concat(strings, values.map(callOrValue()));
 
 // extending native classes is needed for babel correct transpile or don't work with js5
-styled.a = styled(class extends HTMLLinkElement {});
-styled.button = styled(class extends HTMLButtonElement {});
-styled.div = styled(class extends HTMLDivElement {});
-styled.input = styled(class extends HTMLInputElement {});
-styled.p = styled(class extends HTMLParagraphElement {});
-styled.span = styled(class extends HTMLSpanElement {});
+styled.a = styled(class extends HTMLLinkElement {
+});
+styled.button = styled(class extends HTMLButtonElement {
+});
+styled.div = styled(class extends HTMLDivElement {
+});
+styled.input = styled(class extends HTMLInputElement {
+});
+styled.p = styled(class extends HTMLParagraphElement {
+});
+styled.span = styled(class extends HTMLSpanElement {
+});
 
-export default styled;
+export default Object.freeze(styled);
