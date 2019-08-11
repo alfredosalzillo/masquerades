@@ -1,6 +1,7 @@
-import { html, storiesOf } from '@open-wc/demoing-storybook';
+import { storiesOf } from '@open-wc/demoing-storybook';
 import { component, useState } from 'haunted/lib/haunted';
 import { loremIpsum } from 'lorem-ipsum';
+import { html } from 'lit-html';
 import styled, { createTheme } from '../src/main';
 
 const ThemeProvider = createTheme({
@@ -42,8 +43,21 @@ const TestButton = component(() => {
     >Click to Disable</button>
   `;
 });
-
 customElements.define('test-button', TestButton);
+
+const TestThemedButton = component(() => {
+  const [color, setColor] = useState('#ff1100');
+  return html`
+    <theme-provider .value=${{ buttonBackground: color }}>
+        <button 
+          is="styled-button"
+          @click=${() => setColor(color === '#ff1100' ? '#aa11ff' : '#ff1100')}>
+            Click To Change Color  
+        </button>
+    </theme-provider>
+  `;
+});
+customElements.define('test-themed-button', TestThemedButton);
 
 const StyledDiv = styled.div`
   background: #f1c40f;
@@ -83,12 +97,13 @@ storiesOf('Styled element', module)
   .add(
     'button',
     () => html`
-        <theme-provider value=${{
-          buttonBackground: '#12a57a',
-        }}>
-            <test-button>Click to disable</test-button>
-        </theme-provider>
         <test-button>Click to disable</test-button>
+      `,
+  )
+  .add(
+    'themed button',
+    () => html`
+        <test-themed-button></test-themed-button>
       `,
   )
   .add(
