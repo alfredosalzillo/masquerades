@@ -45,6 +45,7 @@
     "@storybook/polymer": "latest",
     "haunted": "^4.5.1",
     "lit-html": "^1.1.1",
-    "lorem-ipsum": "^2.0.3"
+    "lorem-ipsum": "^2.0.3",
+    "stylis": "^3.5.4"
   }
 }

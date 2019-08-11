@@ -1,3 +1,4 @@
+import stylis from 'stylis';
 import hash from './hash';
 
 // immutably concat strings and values together
@@ -40,9 +41,13 @@ const factory = (namespace = 'css') => {
   const inject = (...classes) => Object.entries(style)
     .filter(([, uuid]) => classes.some(c => uuid === c))
     .filter(([, uuid]) => [...sheet.rules].every(r => r.selectorText !== `.${uuid}`))
-    .forEach(([rule, uuid]) => {
-      // inject rule at head of sheet
-      sheet.insertRule(`.${uuid}{ ${rule} }`, 0);
+    .forEach(([rawRule, uuid]) => {
+      // parse rule with stylis and inject at the begin of the sheet
+      stylis(`.${uuid}`, rawRule).split(`.${uuid}`)
+        .filter(rule => !!rule.trim())
+        .forEach((rule) => {
+          sheet.insertRule(`.${uuid}${rule}`, 0);
+        });
     });
   const injectAll = () => inject(...Object
     .keys(style));
