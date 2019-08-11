@@ -89,6 +89,7 @@ Use the styled button
 * works with custom web component 
 * write css in js
 * no need to manage class names
+* support [stylis](https://github.com/thysultan/stylis.js) css
 ##
 _Inspired by [styled-components](https://github.com/styled-components/styled-components])_
 
