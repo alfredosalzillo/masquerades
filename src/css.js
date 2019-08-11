@@ -39,18 +39,8 @@ const factory = (namespace = 'css') => {
     .filter(([, uuid]) => classes.some(c => uuid === c))
     .filter(([, uuid]) => [...sheet.rules].every(r => r.selectorText !== `.${uuid}`))
     .forEach(([rawRule, uuid]) => {
-      sheet.insertRule(`@media {${stylis(`.${uuid}`, rawRule)}}`);
       // parse rule with stylis and inject at the begin of the sheet
-      // stylis(`.${uuid}`, rawRule)
-      //   .split(`.${uuid}`)
-      //   .filter(rule => !!rule.trim())
-      //   .map(rule => `.${uuid}${rule}`)
-      //   .flatMap(rule => rule
-      //     .split('@')
-      //     .map((ruleWIthA, i) => (i ? `@${ruleWIthA}` : ruleWIthA)))
-      //   .forEach((rule) => {
-      //     sheet.insertRule(rule);
-      //   });
+      sheet.insertRule(`@media {${stylis(`.${uuid}`, rawRule)}}`);
     });
   const injectAll = () => inject(...Object
     .keys(style));
