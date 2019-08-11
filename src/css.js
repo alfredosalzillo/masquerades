@@ -43,10 +43,15 @@ const factory = (namespace = 'css') => {
     .filter(([, uuid]) => [...sheet.rules].every(r => r.selectorText !== `.${uuid}`))
     .forEach(([rawRule, uuid]) => {
       // parse rule with stylis and inject at the begin of the sheet
-      stylis(`.${uuid}`, rawRule).split(`.${uuid}`)
+      stylis(`.${uuid}`, rawRule)
+        .split(`.${uuid}`)
         .filter(rule => !!rule.trim())
+        .map(rule => `.${uuid}${rule}`)
+        .flatMap(rule => rule
+          .split('@')
+          .map((ruleWIthA, i) => (i ? `@${ruleWIthA}` : ruleWIthA)))
         .forEach((rule) => {
-          sheet.insertRule(`.${uuid}${rule}`, 0);
+          sheet.insertRule(rule);
         });
     });
   const injectAll = () => inject(...Object
