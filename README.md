@@ -90,6 +90,23 @@ Use the styled button
 * write css in js
 * no need to manage class names
 * support [stylis](https://github.com/thysultan/stylis.js) css
+## Hints
+### Webstorm support
+For add support for stylus in styled tagged template,
+in **_settings > language injections > + > new generic js_** add:
+* Name: **Styled Web Components**
+* Id: **Stylus**
+* Prefix: `.some-class {`
+* Suffix: `}`
+* Places Patterns:
+
+    ```
+    + jsLiteralExpression().and(jsArgument("styled\\.", 0))
+    + jsLiteralExpression().withParent(psiElement().withText(string().contains(".extend")))
+    + jsLiteralExpression().withParent(psiElement().withText(string().startsWith("injectGlobal")))
+    + jsLiteralExpression().withParent(psiElement().withText(string().startsWith("styled")))
+    + taggedString("css")
+    ```
 ##
 _Inspired by [styled-components](https://github.com/styled-components/styled-components])_
 
