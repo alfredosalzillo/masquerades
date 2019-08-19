@@ -1,4 +1,4 @@
-import * as stylis from 'stylis';
+import * as parseStyle from 'stylis';
 import hash from './hash';
 
 // immutably concat strings and values together
@@ -40,7 +40,7 @@ const factory = (namespace = 'css') => {
     .filter(([, uuid]) => [...sheet.rules].every(r => !r.cssText.includes(`.${uuid}`)))
     .forEach(([rawRule, uuid]) => {
       // parse rule with stylis and inject at the begin of the sheet
-      sheet.insertRule(`@media {${stylis(`.${uuid}`, rawRule)}}`);
+      sheet.insertRule(`@media {${parseStyle(`.${uuid}`, rawRule)}}`);
     });
   const injectAll = () => inject(...Object
     .keys(style));
