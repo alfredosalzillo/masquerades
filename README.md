@@ -1,4 +1,4 @@
-# Masquerade 🎭
+# masquerades 🎭
 A library for __styled web components__.
 
 This library is a work in progress, feel free to participate to the project.
@@ -9,12 +9,12 @@ They focus only on style and anything else.
 ## Usage
 Install via npm or yarn.
 ```bash
-npm i masquerade
-yarn add masquerade
+npm i masquerades
+yarn add masquerades
 ```
 import using es modules.
 ```javascript
-import styled from 'masquerade';
+import styled from 'masquerades';
 
 // define styled components
 const StyledDiv = styled.div`
@@ -26,7 +26,7 @@ customElements.define('styled-div', StyledDiv, { extends: "div" });
 ### Style Custom Elements
 Style a custom component using `styled(CustomComponent)`.
 ```javascript
-import styled from 'masquerade';
+import styled from 'masquerades';
 
 const StyledCustomComponent = styled(CustomComponent)`
   background: ${({ disabled }) => (disabled ? 'grey' : '#f1c40f')};
@@ -51,7 +51,7 @@ customElements.define('custom-component', StyledCustomComponent);
 Shortcut for style native components are available,
 for example to style a button use `styled.button`.
 ```javascript
-import styled from 'masquerade';
+import styled from 'masquerades';
 
 // Create the button
 const StyledButton = styled.button`
