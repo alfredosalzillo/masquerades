@@ -1,5 +1,7 @@
-import * as parseStyle from 'stylis';
+import * as stylis from 'stylis';
 import hash from './hash';
+
+const parseStyle = stylis;
 
 // immutably concat strings and values together
 export const concat = (strings, values) => strings
