@@ -9,7 +9,7 @@ export const concat = (strings, values) => strings
   .join('');
 
 export const adoptSheets = (el, ...sheets) => [
-  el.getRootNode().shadowRoot,
+  el.shadowRoot,
   el.getRootNode(),
 ].filter(r => !!r)
   .forEach((root) => {
