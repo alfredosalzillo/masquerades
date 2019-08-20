@@ -1,6 +1,6 @@
 {
   "name": "masquerades",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "description": "A library for styled web components",
   "main": "dist/main.js",
   "esnext": "src/main.js",
