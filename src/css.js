@@ -8,17 +8,19 @@ export const concat = (strings, values) => strings
   .map((s, i) => `${s}${values[i] || ''}`)
   .join('');
 
-export const adoptSheets = (el, ...sheets) => {
-  const root = el.getRootNode();
-  if (root) {
+export const adoptSheets = (el, ...sheets) => [
+  el.getRootNode().shadowRoot,
+  el.getRootNode(),
+].filter(r => !!r)
+  .forEach((root) => {
+    // eslint-disable-next-line no-param-reassign
     root.adoptedStyleSheets = [
       ...new Set([
         ...root.adoptedStyleSheets,
         ...sheets,
       ]),
     ];
-  }
-};
+  });
 
 const factory = (namespace = 'css') => {
   const style = {};
