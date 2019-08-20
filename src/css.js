@@ -1,4 +1,4 @@
-import * as stylis from 'stylis';
+import stylis from 'stylis';
 import hash from './hash';
 
 const parseStyle = stylis;

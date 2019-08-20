@@ -108,7 +108,7 @@ styled.input = styled(class extends HTMLInputElement {});
 styled.p = styled(class extends HTMLParagraphElement {});
 styled.span = styled(class extends HTMLSpanElement {});
 
-export default Object.freeze(styled);
+export default styled;
 export {
   createTheme,
 };
