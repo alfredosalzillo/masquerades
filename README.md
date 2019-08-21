@@ -9,8 +9,8 @@ They focus only on style and anything else.
 ## Usage
 Install via npm or yarn.
 ```bash
-npm i masquerades
-yarn add masquerades
+npm i masquerades@next
+yarn add masquerades@next
 ```
 import using es modules.
 ```javascript
