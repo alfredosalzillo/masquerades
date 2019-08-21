@@ -14,4 +14,4 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - uses: actions/npm@master
-        with: "install"
+        args: "install"
