@@ -78,10 +78,37 @@ customElements.define('styled-button', StyledButton, {
   extends: 'button',
 });
 ```
+
 Use the styled button
 ```html
 <button is="styled-button">Styled Button</button>
 <button is="styled-button" disabled>Styled Button</button>
+```
+### Style Shadow DOM
+The css is injected in a stylesheet adopted by the root of the element and inside the shadow root,
+so it's possible to style both the light and shadow dom.
+```javascript
+import styled from 'masquerades';
+
+const StyledCustomComponent = styled(CustomComponent)`
+  /* some Light DOM style ... */
+  :global(:host(&)) {
+    /* Shadow DOM style */
+    selector {
+      /*...*/
+    }
+  }
+  /* or use the styled.shadow shortcut */
+  ${(props) => styled.shadow`
+    /* Shadow DOM style */
+    selector {
+      /*...*/
+    }
+  `}
+`
+
+// Define the styled button as extension of the native button
+customElements.define('custom-component', StyledCustomComponent);
 ```
 ## Pros
 * works in both **Light** and **Shadow** DOM
