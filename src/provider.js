@@ -43,6 +43,10 @@ export const createProvider = (
     }
 
     static of(context) {
+      return providerOf(identifier, context);
+    }
+
+    static valueOf(context) {
       return valueOf(identifier, context);
     }
 
