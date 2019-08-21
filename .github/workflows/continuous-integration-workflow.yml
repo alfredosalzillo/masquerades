@@ -3,10 +3,11 @@ on: [push]
 
 jobs:
   build:
+    name: Build on node ${{ matrix.node_version }} and ${{ matrix.os }}
     strategy:
       matrix:
-        node: [6, 8, 10]
-        os: [ubuntu-14.04, ubuntu-18.04]
+        node: [8, 10, 12]
+        os: [ubuntu-latest, macOS-latest]
     - uses: actions/checkout@master
     - uses: actions/setup-node@v1
       with:
