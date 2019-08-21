@@ -99,6 +99,7 @@ const styled = BaseElement => (
 ) => StyledElement(BaseElement, el => css(strings, ...values.map(callOrValue(el))));
 
 styled.css = (strings, ...values) => concat(strings, values.map(callOrValue()));
+styled.shadow = (strings, ...values) => `:global(:host(&)) { ${styled.css(strings, values)} }`;
 
 // extending native classes is needed for babel correct transpile or don't work with js5
 styled.a = styled(class extends HTMLLinkElement {});
