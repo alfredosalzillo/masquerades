@@ -71,7 +71,7 @@ const StyledDiv = styled.div`
   p {
     margin: 0.3rem;
     padding: 0;
-    text-align; justify;
+    text-align: justify;
     :first-letter {
       initial-letter: 2;
       font-weight: bold;
