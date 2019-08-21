@@ -8,9 +8,10 @@ jobs:
       matrix:
         node: [8, 10, 12]
         os: [ubuntu-latest, macOS-latest]
-    - uses: actions/checkout@master
-    - uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node }}
-    - uses: actions/npm@master
-      with: "install"
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: actions/npm@master
+        with: "install"
