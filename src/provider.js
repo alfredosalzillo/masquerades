@@ -28,8 +28,8 @@ export const createProvider = (
 
     // TODO: remove get and setter when fixed observedAttributes
     set value(value) {
-      this.notifyChanges();
       values.set(this, value);
+      this.notifyChanges();
     }
 
     get value() {
