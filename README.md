@@ -110,6 +110,83 @@ const StyledCustomComponent = styled(CustomComponent)`
 // Define the styled button as extension of the native button
 customElements.define('custom-component', StyledCustomComponent);
 ```
+### Using Theme
+Use theme configure global value for styled components.
+
+#### Create a Theme.
+```javascript
+import styled, { createTheme } from 'masquerades';
+
+const ThemeProvider = createTheme({
+  primary: '#12a57a',
+  accent: '#f1c40f',
+});
+customElements.define('theme-provider', ThemeProvider);
+```
+#### Use a Theme
+The value of the nearest theme can be used as attribute (and props) in the styled element.
+```javascript
+import styled from 'masquerades';
+
+const StyledButton = styled.button`
+  /* the props theme is the value of the nearest theme provider */
+  background: ${({ type = 'primary', theme }) => (theme[type])};
+  color: #fff;
+  border: 3px solid #fff;
+  border-radius: 50px;
+  padding: 0.8rem 2rem;
+  font: 24px "Margarine", sans-serif;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: 0.2s ease-in-out;
+  letter-spacing: 2px;
+`.observeAttributes(['disabled']);
+
+// Define the styled button as extension of the native button
+customElements.define('styled-button', StyledButton, {
+  extends: 'button',
+});
+```
+Or using the static method `valueOf` of the theme provider class.
+```javascript
+class CustomElement extends HTMLElement {
+  constructor() {
+    super();
+    this.onThemeValueChange = this.onThemeValueChange.bind(this);
+  }
+
+  connectedCallback() {
+    const themeProvider = ThemeProvider.of(this);
+    if (themeProvider) {
+      themeProvider.addEventListener('provider-value-change', this.onThemeValueChange);
+    }
+  }
+
+  onThemeValueChange() {
+    const value = ThemeProvider.valueOf(this);
+    // do something with the theme value
+  }
+
+  disconnectCallback() {
+    const themeProvider = ThemeProvider.of(this);
+    if (themeProvider) {
+      themeProvider.removeEventListener('provider-value-change', this.onThemeValueChange);
+    }
+  }
+}
+```
+Add the theme in the element three.
+```html
+<theme-provider .value=${theme1}>
+    <div>
+        <button is="styled-button">Styled Button With Theme1</button>
+        <theme-provider .value=${theme2}>
+            <button is="styled-button">Styled Button With Theme2</button>
+        </theme-provider>
+    </div>
+</theme-provider>
+```
 ## Pros
 * works in both **Light** and **Shadow** DOM
 * works with native web component (HTMLButtonElement, HTMLDivElement, ...)
