@@ -1,6 +1,6 @@
 {
   "name": "masquerades",
-  "version": "0.0.1-alpha.4",
+  "version": "0.0.1-alpha.5",
   "description": "A library for styled web components",
   "main": "dist/main.js",
   "esnext": "src/main.js",
@@ -40,12 +40,12 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.2",
     "rollup-plugin-eslint": "^7.0.0",
-    "rollup-plugin-node-resolve": "^5.2.0"
-  },
-  "dependencies": {
+    "rollup-plugin-node-resolve": "^5.2.0",
     "@storybook/polymer": "latest",
     "haunted": "^4.5.1",
-    "lit-html": "^1.1.1",
+    "lit-html": "^1.1.1"
+  },
+  "dependencies": {
     "lorem-ipsum": "^2.0.3",
     "stylis": "^3.5.4"
   }
