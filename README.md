@@ -1,4 +1,6 @@
 # masquerades 🎭
+[![Actions Status](https://github.com/{owner}/{repo}/workflows/{workflow_name}/badge.svg)](https://github.com/{owner}/{repo}/actions)
+
 A library for __styled web components__.
 
 This library is a work in progress, feel free to participate to the project.
