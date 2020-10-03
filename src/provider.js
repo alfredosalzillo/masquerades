@@ -21,12 +21,6 @@ export const createProvider = (
   identifier = Symbol(`provider-${Date.now()}`),
 ) => {
   class Provider extends HTMLElement {
-    // TODO FIX: why this is not working?
-    static get observedAttributes() {
-      return ['value'];
-    }
-
-    // TODO: remove get and setter when fixed observedAttributes
     set value(value) {
       values.set(this, value);
       this.notifyChanges();
@@ -48,12 +42,6 @@ export const createProvider = (
 
     static valueOf(context) {
       return valueOf(identifier, context);
-    }
-
-    attributeChangedCallback(name) {
-      if (name === 'value') {
-        this.notifyChanges();
-      }
     }
 
     notifyChanges() {
