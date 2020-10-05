@@ -68,10 +68,13 @@ function StyledElement(BaseElement, styler) {
       this.updateStyle();
     }
 
-    disconnectCallback() {
+    disconnectedCallback() {
       const themeProvider = providerOf(themeSymbol, this);
       if (themeProvider) {
         themeProvider.removeEventListener('provider-value-change', this.updateStyle);
+      }
+      if (super.disconnectedCallback) {
+        super.disconnectedCallback();
       }
     }
 
