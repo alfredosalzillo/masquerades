@@ -45,7 +45,6 @@ const StyledCustomComponent = styled(CustomComponent)`
   `}
 `
 
-// Define the styled button as extension of the native button
 customElements.define('custom-component', StyledCustomComponent);
 
 ```
@@ -109,7 +108,6 @@ const StyledCustomComponent = styled(CustomComponent)`
   `}
 `
 
-// Define the styled button as extension of the native button
 customElements.define('custom-component', StyledCustomComponent);
 ```
 ### Using Theme
@@ -196,6 +194,8 @@ Add the theme in the element three.
 * write css in js
 * no need to manage class names
 * support [stylis](https://github.com/thysultan/stylis.js) css
+## Compatibility
+* This library uses [Constructible Style Sheets](https://wicg.github.io/construct-stylesheets/). Depending on your targets you may need to include a [polyfill](https://www.npmjs.com/package/construct-style-sheets-polyfill) for browsers that don't support them.
 ## Hints
 ### Webstorm support
 For add support for stylus in styled tagged template,
